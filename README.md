@@ -8,7 +8,7 @@
 | Curso | Engenharia de Computação |
 | Disciplina | Modelagem Relacional de Banco de Dados |
 | Integrantes | Luiz Gustavo Oliveira Santos e Gabriel Soares Fonseca |
-| Semestre letivo | 2026/2 |
+| Semestre letivo | 6° Período |
 | Local | Montes Claros – MG |
 | Tema | Sistema de Gestão de Manutenção Industrial |
 
