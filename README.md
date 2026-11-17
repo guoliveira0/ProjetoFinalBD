@@ -53,7 +53,7 @@ As duas relações N:N são ORDEM_SERVICO × TECNICO (LANCAMENTO_HORAS) e ORDEM_
 
 ## 4. Diagrama de classes / DER
 
-![DER final do sistema de manutenção industrial](assets/der.jpg)
+![DER final do sistema de manutenção industrial](assets/DEROS3.jpg)
 
 **Figura 1 —** Modelo final fornecido pela dupla. PK indica chave primária; FK indica chave estrangeira; 1 e N indicam cardinalidades. Os campos `inicio_indisponibilidade` e `retorno_operacao` viabilizam a análise de eventos de falha. O DDL acrescenta restrições de integridade e explicita algumas nulabilidades que não aparecem no desenho; o dicionário abaixo documenta o esquema físico.
 
