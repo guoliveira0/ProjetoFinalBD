@@ -602,7 +602,7 @@ A pré-agregação separa horas e custos antes dos JOINs, evitando multiplicaç�
 2. Abra uma conexão local com usuário autorizado a criar bancos e tabelas.
 3. Abra `Manutencao_Industrial_DDL_DML_Indicadores.sql` e execute integralmente.
 4. Atualize Schemas e verifique `manutencao_industrial`. 
-5. Abra `Consultas_Manutencao_Industrial_Regeradas.sql`, execute o USE e depois cada consulta individualmente. Compare os resultados com os exemplos.
+5. Abra `Consultas_Manutencao_Industrial.sql`, execute o USE e depois cada consulta individualmente. Compare os resultados com os exemplos.
 
 ### 8.1 Povoamento
 
