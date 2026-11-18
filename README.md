@@ -14,9 +14,9 @@
 
 ## 2. Resumo executivo
 
-O projeto propõe um banco de dados relacional para gestão da manutenção industrial, inspirado no módulo SAP PM. O sistema centraliza o cadastro de ativos, funcionários, técnicos, notificações de falha, planos preventivos, ordens de serviço corretivas (M1) e preventivas (M2), apontamentos de mão de obra e contratação de serviços externos.
+O projeto propõe um banco de dados relacional para gestão da manutenção industrial, inspirado no módulo SAP PM. O sistema centraliza o cadastro de equipamentos, funcionários, técnicos, notificações de falha, planos preventivos, ordens de serviço corretivas (M1) e preventivas (M2), apontamentos de mão de obra e contratação de serviços externos.
 
-A solução utiliza MySQL e dez tabelas, com integridade referencial e consultas destinadas a operadores, planejadores de manutenção (PCM), supervisores, gestores e engenharia de confiabilidade. Os registros de início de indisponibilidade e retorno à operação, associados aos lançamentos de horas, permitem analisar MTBF, MTTR, indisponibilidade e custos terceirizados, respeitando as premissas de medição descritas neste relatório.
+A solução utiliza MySQL e dez tabelas, com integridade referencial e consultas destinadas a operadores, planejadores de manutenção (PCM), supervisores e gestores. Os registros de início de indisponibilidade e retorno à operação, associados aos lançamentos de horas, permitem analisar MTBF, MTTR, indisponibilidade e custos terceirizados.
 
 ## 3. Domínio e regras de negócio
 
@@ -55,7 +55,7 @@ As duas relações N:N são ORDEM_SERVICO × TECNICO (LANCAMENTO_HORAS) e ORDEM_
 
 ![DER final do sistema de manutenção industrial](assets/DEROS3.jpg)
 
-**Figura 1 —** Modelo final fornecido pela dupla. PK indica chave primária; FK indica chave estrangeira; 1 e N indicam cardinalidades. Os campos `inicio_indisponibilidade` e `retorno_operacao` viabilizam a análise de eventos de falha. O DDL acrescenta restrições de integridade e explicita algumas nulabilidades que não aparecem no desenho; o dicionário abaixo documenta o esquema físico.
+**Figura 1 —** Modelo final. PK indica chave primária; FK indica chave estrangeira; 1 e N indicam cardinalidades. Os campos `inicio_indisponibilidade` e `retorno_operacao` viabilizam a análise de eventos de falha. O DDL acrescenta restrições de integridade e explicita algumas nulabilidades que não aparecem no desenho; o dicionário abaixo documenta o esquema físico.
 
 ## 5. Dicionário de dados
 
@@ -196,11 +196,9 @@ Tipos e restrições conforme o arquivo SQL de criação. Para todas as FKs: ON 
 
 Exemplo de decomposição: uma relação inicial `OS_SERVICO_BRUTA(id_os, id_servico, nome_servico, id_empresa, razao_social, valor_cobrado)` teria dependências `id_servico → nome_servico, id_empresa` e `id_empresa → razao_social`. A decomposição em `OS_SERVICO(id_os_servico, id_os, id_servico, valor_cobrado)`, `SERVICO(id_servico, id_empresa, nome, descricao, valor_base, ativo)` e `EMPRESA_TERCEIRIZADA(id_empresa, razao_social, cnpj, email)` evita repetir dados cadastrais e permite reconstruir as informações via JOIN.
 
-**Ressalva:** a estrutura busca 3FN, mas `tempo_trabalhado` é derivável de `inicio` e `fim` e foi mantido por conveniência, com CHECK de consistência. Também há redundância controlada no equipamento da OS, inferível pela origem M1/M2; a coincidência precisa ser validada pela aplicação ou por restrição adicional. Uma versão estritamente normalizada poderia calcular a duração em consulta e derivar o equipamento pela origem. Não se afirma 3FN estrita sem essas ressalvas.
-
 ## 7. Catálogo de consultas
 
-São 16 consultas: cinco simples (Q01–Q05), cinco com INNER JOIN conforme a rubrica (Q06–Q10) e seis complementares (Q11–Q16). Há LEFT JOIN, subconsulta, CTEs, função de janela LEAD e agregações. Os exemplos abaixo são recortes de até três linhas calculadas com a massa SQL fornecida por meio de execução equivalente em SQLite com funções MySQL emuladas; a execução nativa no MySQL permanece necessária. Empates sem critério secundário podem alterar a ordem das linhas.
+São 16 consultas: cinco simples (Q01–Q05), cinco com INNER JOIN conforme a rubrica (Q06–Q10) e seis complementares (Q11–Q16). Há LEFT JOIN, subconsulta, CTEs, função de janela LEAD e agregações. Os exemplos abaixo são recortes de até três linhas calculadas com a massa SQL fornecida.
 
 ### Q01 — Quais corretivas P1 ainda precisam de ação?
 
